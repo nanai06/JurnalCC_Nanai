@@ -1,65 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azure Test Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #0078D4, #00B4FF);
-            color: white;
-            text-align: center;
-            padding-top: 100px;
-        }
-        .card {
-            background: rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 15px;
-            display: inline-block;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        h1 {
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 18px;
-        }
-        .btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background: white;
-            color: #0078D4;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .btn:hover {
-            background: #f0f0f0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Nanai - v2.0</title>
+  <style>
+    :root {
+      --bg: #fff5fa; --ink: #2a0a1e; --muted: #7a4a65; --card: #ffffff;
+      --line: #f6c9de; --rose: #ec4899; --deep: #be185d; --ok: #0f9d6b;
+      --glow: rgba(236,72,153,.18);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c0715; --ink: #ffe9f4; --muted: #d6a4c0; --card: #2b0f21;
+        --line: #5a2443; --rose: #f472b6; --deep: #f9a8d4; --ok: #34d399;
+        --glow: rgba(244,114,182,.22);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6;
+      background-image: radial-gradient(circle at 85% 0%, var(--glow), transparent 45%),
+                        radial-gradient(circle at 0% 100%, var(--glow), transparent 40%);
+    }
+    main { max-width: 880px; margin: 0 auto; padding: 56px 24px 40px; }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif; font-weight: 700;
+      font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1.05; letter-spacing: -.02em;
+      margin: 12px 0 14px;
+    }
+    h2 { font-family: Georgia, serif; font-size: 1.5rem; margin: 0 0 12px; }
+    p { margin: 0 0 12px; max-width: 62ch; }
+    .muted { color: var(--muted); }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px; font-size: .85rem;
+      border: 1px solid var(--line); background: var(--card); color: var(--muted);
+      padding: 4px 12px; border-radius: 999px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: pulse 1.8s ease-in-out infinite; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 6px transparent; opacity: .55; } }
+    #typed::after { content: "|"; margin-left: 2px; color: var(--rose); animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .pipeline {
+      margin-top: 36px; background: var(--card); border: 1px solid var(--line);
+      border-radius: 20px; padding: 24px; box-shadow: 0 12px 40px var(--glow);
+    }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0; }
+    .step {
+      border: 1.5px dashed var(--line); border-radius: 12px; padding: 14px; text-align: center;
+      font-size: .95rem; color: var(--muted); transition: all .4s;
+    }
+    .step.on { border-style: solid; border-color: var(--ok); color: var(--ink); background: color-mix(in srgb, var(--ok) 12%, transparent); }
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+    button {
+      background: var(--deep); color: #fff; border: 0; padding: 12px 22px; border-radius: 10px;
+      font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform .15s;
+    }
+    @media (prefers-color-scheme: dark) { button { color: #2a0a1e; } }
+    button:hover { transform: translateY(-2px); }
+    button:focus-visible { outline: 3px solid var(--rose); outline-offset: 3px; }
+    #pesan { font-weight: 600; color: var(--ok); min-height: 1.6em; }
+    #clock { font-variant-numeric: tabular-nums; }
+
+    .grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; margin-top: 56px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+    .chips li { background: var(--card); border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; font-size: .92rem; }
+    footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .steps { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
 </head>
 <body>
-    <div class="card">
-        <h1>🚀 Azure Web Test</h1>
-        <p>Website ini berhasil berjalan di Microsoft Azure!</p>
-        <p id="time"></p>
-        <button class="btn" onclick="showMessage()">Klik Saya</button>
+  <main>
+    <span class="badge"><span class="dot"></span> Versi 2.0 &middot; live di Vercel</span>
+    <h1>Halo, aku Nanai!</h1>
+    <p class="muted" style="font-size:1.15rem">Mahasiswa Sistem Informasi, Telkom University Jakarta. Lagi belajar <span id="typed"></span></p>
+
+    <section class="pipeline" aria-labelledby="judul-deploy">
+      <h2 id="judul-deploy">Simulasi continuous deployment</h2>
+      <p class="muted">Setiap perubahan yang di-push ke GitHub otomatis dibangun dan tayang lagi di Vercel. Klik tombol untuk lihat alurnya.</p>
+      <div class="steps" aria-live="polite">
+        <div class="step" id="s1">Commit ke GitHub</div>
+        <div class="step" id="s2">Build di Vercel</div>
+        <div class="step" id="s3">Website tayang</div>
+      </div>
+      <div class="row">
+        <button id="btn" type="button">Klik Saya</button>
+        <span id="pesan" role="status"></span>
+      </div>
+      <p class="muted" style="margin:14px 0 0">Waktu sekarang: <span id="clock"></span></p>
+    </section>
+
+    <div class="grid">
+      <section>
+        <h2>Tentang praktikum ini</h2>
+        <p>Halaman ini awalnya cuma satu kartu dan satu tombol. Di versi 2.0 aku ubah tampilannya lewat GitHub, dan Vercel langsung memperbarui website tanpa aku deploy ulang manual.</p>
+      </section>
+      <section>
+        <h2>Yang dipakai</h2>
+        <ul class="chips">
+          <li>HTML &amp; CSS</li>
+          <li>JavaScript</li>
+          <li>GitHub</li>
+          <li>Vercel</li>
+          <li>Cloud Computing</li>
+        </ul>
+      </section>
     </div>
 
-    <script>
-        function showMessage() {
-            alert("Halo! Website kamu sudah berhasil berjalan di Azure 🎉");
-        }
+    <footer>Praktikum Cloud Computing &middot; Modul 01 &middot; Web Server on Cloud</footer>
+  </main>
 
-        function updateTime() {
-            const now = new Date();
-            document.getElementById("time").innerText = "Waktu sekarang: " + now.toLocaleString();
-        }
+  <script>
+    // Efek ketik
+    var kata = ["Cloud Computing", "deployment di Vercel", "continuous deployment"];
+    var k = 0, i = 0, hapus = false, el = document.getElementById("typed");
+    function ketik() {
+      var t = kata[k];
+      el.textContent = t.slice(0, i);
+      if (!hapus && i < t.length) { i++; setTimeout(ketik, 90); }
+      else if (!hapus) { hapus = true; setTimeout(ketik, 1400); }
+      else if (i > 0) { i--; setTimeout(ketik, 45); }
+      else { hapus = false; k = (k + 1) % kata.length; setTimeout(ketik, 300); }
+    }
+    ketik();
 
-        setInterval(updateTime, 1000);
-        updateTime();
-    </script>
+    // Jam
+    function jam() {
+      document.getElementById("clock").textContent =
+        new Date().toLocaleString("id-ID", { dateStyle: "long", timeStyle: "medium" });
+    }
+    jam(); setInterval(jam, 1000);
+
+    // Simulasi pipeline
+    var btn = document.getElementById("btn"), pesan = document.getElementById("pesan");
+    var ids = ["s1", "s2", "s3"], jalan = false;
+    btn.addEventListener("click", function () {
+      if (jalan) return;
+      jalan = true; pesan.textContent = "";
+      ids.forEach(function (id) { document.getElementById(id).classList.remove("on"); });
+      ids.forEach(function (id, n) {
+        setTimeout(function () { document.getElementById(id).classList.add("on"); }, 500 * (n + 1));
+      });
+      setTimeout(function () {
+        pesan.textContent = "Deploy di Vercel berhasil!";
+        jalan = false;
+      }, 500 * ids.length + 300);
+    });
+  </script>
 </body>
 </html>
